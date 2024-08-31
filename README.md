@@ -1,4 +1,4 @@
-# curseofrust
+# Curse O' SubIT
 
 Curseofrust is [curseofwar](https://github.com/a-nikolaev/curseofwar) (Real Time Strategy Game for Linux) re-implemented in Rust.
 
