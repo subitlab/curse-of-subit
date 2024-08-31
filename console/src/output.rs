@@ -14,9 +14,6 @@ use crate::State;
 const GRASS: &str = " - ";
 const MOUNTAIN: &str = "/\\^";
 const MINE: &str = "/$\\";
-const VILLAGE: &str = " n ";
-const TOWN: &str = "i=i";
-const FORTRESS: &str = "W#W";
 
 const UNKNOWN: &str = "???";
 
@@ -101,6 +98,8 @@ where
         &mut tiles_all
     };
 
+    let mut global_rand = fastrand::bool();
+
     for Pos(x, y) in iter {
         queue!(
             st.out,
@@ -181,11 +180,28 @@ where
             }
             curseofrust::grid::Tile::Habitable { land, units, owner } => {
                 cursor!();
+                global_rand = !global_rand;
                 let symbol = match land {
                     curseofrust::grid::HabitLand::Grassland => pop_to_symbol(units.iter().sum()),
-                    curseofrust::grid::HabitLand::Village => VILLAGE,
-                    curseofrust::grid::HabitLand::Town => TOWN,
-                    curseofrust::grid::HabitLand::Fortress => FORTRESS,
+                    curseofrust::grid::HabitLand::OP => {
+                        if global_rand {
+                            "OP "
+                        } else {
+                            " OP"
+                        }
+                    }
+                    curseofrust::grid::HabitLand::OvO => {
+                        if global_rand {
+                            "OvO"
+                        } else {
+                            "OVO"
+                        }
+                    }
+                    curseofrust::grid::HabitLand::DCK => "DCK",
+                    curseofrust::grid::HabitLand::LYC => "LYC",
+                    curseofrust::grid::HabitLand::ZZJ => "ZZJ",
+                    curseofrust::grid::HabitLand::HTY => "HTY",
+                    curseofrust::grid::HabitLand::ZWH => "ZWH",
                     _ => UNKNOWN,
                 };
                 let style = player_style(*owner);

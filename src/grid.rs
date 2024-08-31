@@ -137,7 +137,7 @@ impl Grid {
         for (i, loc) in chosen_locs.iter_mut().enumerate() {
             *loc = locs[(i + di) % locs.len()];
             let Pos(x, y) = *loc;
-            self.tiles[x as usize][y as usize].set_habitable(HabitLand::Fortress);
+            self.tiles[x as usize][y as usize].set_habitable(HabitLand::DCK);
 
             // Place mines nearby
             let Pos(ri, rj) = fastrand::choice(Pos::DIRS).unwrap();
@@ -420,9 +420,9 @@ impl Tile {
             0 => {
                 this = Tile::Habitable {
                     land: match fastrand::u32(..6) {
-                        0 => HabitLand::Fortress,
-                        1 | 2 => HabitLand::Town,
-                        _ => HabitLand::Village,
+                        0 => HabitLand::DCK,
+                        1 | 2 => HabitLand::OvO,
+                        _ => HabitLand::OP,
                     },
                     units: [0; MAX_PLAYERS],
                     owner: Default::default(),
@@ -508,34 +508,31 @@ impl Default for Tile {
 pub enum HabitLand {
     /// Habitable territory that does not have cities.
     #[default]
-    Grassland,
-    Village,
-    Town,
-    /// Castles.
-    Fortress,
+    Grassland = 0,
+
+    OP,
+    OvO,
+    DCK,
+    LYC,
+    ZZJ,
+    HTY,
+    ZWH,
 }
 
 impl HabitLand {
     /// Gets price of this type of land.
     #[inline]
     pub const fn price(self) -> u64 {
-        match self {
-            HabitLand::Grassland => 0,
-            HabitLand::Village => king::PRICE_VILLAGE,
-            HabitLand::Town => king::PRICE_TOWN,
-            HabitLand::Fortress => king::PRICE_FORTRESS,
-        }
+        2u64.pow(self as u32 + 5)
     }
 
     /// Upgrade this land and returns the upgrade price.
     #[inline]
     pub fn upgrade(&mut self) -> Option<u64> {
-        *self = match self {
-            HabitLand::Grassland => HabitLand::Village,
-            HabitLand::Village => HabitLand::Town,
-            HabitLand::Town => HabitLand::Fortress,
-            HabitLand::Fortress => return None,
-        };
+        if matches!(self, Self::ZWH) {
+            return None;
+        }
+        *self = unsafe { std::mem::transmute::<u8, Self>((*self) as u8 + 1) };
         Some(self.price())
     }
 
@@ -543,22 +540,16 @@ impl HabitLand {
     /// the degrade was successful.
     #[inline]
     pub fn degrade(&mut self) -> bool {
-        *self = match self {
-            HabitLand::Grassland => return false,
-            HabitLand::Village => HabitLand::Grassland,
-            HabitLand::Town => HabitLand::Village,
-            HabitLand::Fortress => HabitLand::Town,
-        };
+        if matches!(self, Self::Grassland) {
+            return false;
+        }
+        *self = unsafe { std::mem::transmute::<u8, Self>((*self) as u8 - 1) };
         true
     }
 
-    pub const fn growth(self) -> f32 {
-        match self {
-            HabitLand::Village => 1.10,
-            HabitLand::Town => 1.20,
-            HabitLand::Fortress => 1.30,
-            _ => 0.0,
-        }
+    #[inline]
+    pub fn growth(self) -> f32 {
+        1.0f32 + 0.5f32 * (self as u8 as f32)
     }
 }
 

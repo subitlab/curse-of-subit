@@ -72,10 +72,15 @@ pub enum TileClass {
     Mountain = 1,
     Mine = 2,
     Grassland = 3,
-    Village = 4,
-    Town = 5,
-    #[doc(alias = "Castle")]
-    Fortress = 6,
+
+    ZWH = 4,
+    HTY = 5,
+    ZZJ = 6,
+    LYC = 7,
+    DCK = 8,
+    OvO = 9,
+    OP = 10,
+
     #[doc(hidden)]
     Other = u8::MAX,
 }
@@ -88,9 +93,13 @@ impl From<&Tile> for TileClass {
             Tile::Mountain => TileClass::Mountain,
             Tile::Mine(_) => TileClass::Mine,
             Tile::Habitable { land, .. } => match land {
-                HabitLand::Fortress => TileClass::Fortress,
-                HabitLand::Town => TileClass::Town,
-                HabitLand::Village => TileClass::Village,
+                HabitLand::ZWH => TileClass::ZWH,
+                HabitLand::HTY => TileClass::HTY,
+                HabitLand::ZZJ => TileClass::ZZJ,
+                HabitLand::LYC => TileClass::LYC,
+                HabitLand::DCK => TileClass::DCK,
+                HabitLand::OvO => TileClass::OvO,
+                HabitLand::OP => TileClass::OP,
                 HabitLand::Grassland => TileClass::Grassland,
                 _ => TileClass::Other,
             },
@@ -107,9 +116,15 @@ impl From<u8> for TileClass {
             1 => TileClass::Mountain,
             2 => TileClass::Mine,
             3 => TileClass::Grassland,
-            4 => TileClass::Village,
-            5 => TileClass::Town,
-            6 => TileClass::Fortress,
+
+            4 => TileClass::ZWH,
+            5 => TileClass::HTY,
+            6 => TileClass::ZZJ,
+            7 => TileClass::LYC,
+            8 => TileClass::DCK,
+            9 => TileClass::OvO,
+            10 => TileClass::OP,
+
             _ => TileClass::Other,
         }
     }
@@ -122,20 +137,22 @@ impl From<TileClass> for Tile {
             TileClass::Void => Tile::Void,
             TileClass::Mountain => Tile::Mountain,
             TileClass::Mine => Tile::Mine(Default::default()),
-            TileClass::Grassland | TileClass::Village | TileClass::Town | TileClass::Fortress => {
-                Tile::Habitable {
-                    land: match value {
-                        TileClass::Grassland => HabitLand::Grassland,
-                        TileClass::Village => HabitLand::Village,
-                        TileClass::Town => HabitLand::Town,
-                        TileClass::Fortress => HabitLand::Fortress,
-                        _ => unreachable!(),
-                    },
-                    units: [0u16; MAX_PLAYERS],
-                    owner: Default::default(),
-                }
-            }
             TileClass::Other => Tile::Void,
+            _ => Tile::Habitable {
+                land: match value {
+                    TileClass::ZWH => HabitLand::ZWH,
+                    TileClass::HTY => HabitLand::HTY,
+                    TileClass::ZZJ => HabitLand::ZZJ,
+                    TileClass::LYC => HabitLand::LYC,
+                    TileClass::DCK => HabitLand::DCK,
+                    TileClass::OvO => HabitLand::OvO,
+                    TileClass::OP => HabitLand::OP,
+                    TileClass::Grassland => HabitLand::Grassland,
+                    _ => unreachable!(),
+                },
+                units: [0u16; MAX_PLAYERS],
+                owner: Default::default(),
+            },
         }
     }
 }

@@ -20,10 +20,6 @@ impl From<Player> for Country {
     }
 }
 
-pub const PRICE_VILLAGE: u64 = 160;
-pub const PRICE_TOWN: u64 = 240;
-pub const PRICE_FORTRESS: u64 = 320;
-
 impl Grid {
     /// Builds a village, upgrades a village to a town,
     /// or upgrades a town to a fortress.
@@ -120,11 +116,11 @@ impl Strategy {
     #[inline]
     const fn city_spread_val(self, city: HabitLand) -> i32 {
         match (self, city) {
-            (Self::Noble, HabitLand::Fortress) => 32,
-            (_, HabitLand::Fortress) => 16,
-            (_, HabitLand::Town) => 8,
-            (Self::Noble, HabitLand::Village) => 2,
-            (_, HabitLand::Village) => 4,
+            (Self::Noble, HabitLand::DCK) => 32,
+            (_, HabitLand::DCK) => 16,
+            (_, HabitLand::OvO) => 8,
+            (Self::Noble, HabitLand::OP) => 2,
+            (_, HabitLand::OP) => 4,
             _ => 0,
         }
     }
@@ -254,8 +250,8 @@ impl King {
 
                     let mut base = match land {
                         HabitLand::Grassland => 1.0,
-                        HabitLand::Village => 8.0,
-                        HabitLand::Town => 32.0,
+                        HabitLand::OP => 8.0,
+                        HabitLand::OvO => 32.0,
                         _ => 0.0,
                     };
                     self.strategy.process_base(|| self.values[i][j], &mut base);

@@ -709,13 +709,13 @@ impl CorApp {
                             pos_y(j),
                         );
                         match land {
-                            HabitLand::Village => {
+                            HabitLand::OP => {
                                 draw_tile_2h(0, 7 + 3 * owner.0 as i16, pos_x(ui, i), pos_y(j))
                             }
-                            HabitLand::Town => {
+                            HabitLand::OvO => {
                                 draw_tile_2h(1, 7 + 3 * owner.0 as i16, pos_x(ui, i), pos_y(j))
                             }
-                            HabitLand::Fortress => {
+                            HabitLand::DCK => {
                                 draw_tile_2h(2, 7 + 3 * owner.0 as i16, pos_x(ui, i), pos_y(j))
                             }
                             _ => {
