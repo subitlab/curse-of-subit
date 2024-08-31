@@ -95,9 +95,7 @@ pub enum Strategy {
     /// Have more desire to own tiles.
     PersistentGreedy,
     Opportunist,
-    /// Have more desire to fortresses,
-    /// and less desire to villages than
-    /// other strategies.
+    /// The one who loves all `HTY` and `OP`.
     Noble,
     /// Have more desire to control mines.
     /// Will never place flags.
@@ -116,12 +114,10 @@ impl Strategy {
     #[inline]
     const fn city_spread_val(self, city: HabitLand) -> i32 {
         match (self, city) {
-            (Self::Noble, HabitLand::DCK) => 32,
-            (_, HabitLand::DCK) => 16,
-            (_, HabitLand::OvO) => 8,
-            (Self::Noble, HabitLand::OP) => 2,
-            (_, HabitLand::OP) => 4,
-            _ => 0,
+            (_, HabitLand::Grassland) => 0,
+            (Self::Noble, HabitLand::HTY) => 256,
+            (Self::Noble, HabitLand::OP) => 64,
+            (_, land) => 2i32.pow(land as u32),
         }
     }
 
@@ -248,12 +244,7 @@ impl King {
                     let pl = self.player.0 as usize;
                     let army = units[pl];
 
-                    let mut base = match land {
-                        HabitLand::Grassland => 1.0,
-                        HabitLand::OP => 8.0,
-                        HabitLand::OvO => 32.0,
-                        _ => 0.0,
-                    };
+                    let mut base = 2i32.pow(*land as u32) as f32;
                     self.strategy.process_base(|| self.values[i][j], &mut base);
                     let v = if ok {
                         base * (MAX_POPULATION - army) as f32

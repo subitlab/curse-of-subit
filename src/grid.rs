@@ -523,7 +523,7 @@ impl HabitLand {
     /// Gets price of this type of land.
     #[inline]
     pub const fn price(self) -> u64 {
-        2u64.pow(self as u32 + 5)
+        2u64.pow(self as u32 + 3)
     }
 
     /// Upgrade this land and returns the upgrade price.
