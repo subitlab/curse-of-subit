@@ -340,7 +340,22 @@ dependencies = [
 ]
 
 [[package]]
-name = "curseofrust-console"
+name = "curseofsubit"
+version = "0.1.0"
+dependencies = [
+ "fastrand",
+]
+
+[[package]]
+name = "curseofsubit-cli-parser"
+version = "0.1.0"
+dependencies = [
+ "clap_lex",
+ "curseofsubit",
+]
+
+[[package]]
+name = "curseofsubit-console"
 version = "0.1.0"
 dependencies = [
  "async-executor",
@@ -356,7 +371,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "curseofrust-gui-cocoa"
+name = "curseofsubit-gui-cocoa"
 version = "0.1.0"
 dependencies = [
  "build-time",
@@ -368,21 +383,6 @@ dependencies = [
  "fastrand",
  "itoa",
  "local-ip-address",
-]
-
-[[package]]
-name = "curseofsubit"
-version = "0.1.0"
-dependencies = [
- "fastrand",
-]
-
-[[package]]
-name = "curseofsubit-cli-parser"
-version = "0.1.0"
-dependencies = [
- "clap_lex",
- "curseofsubit",
 ]
 
 [[package]]
