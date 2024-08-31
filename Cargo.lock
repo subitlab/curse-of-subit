@@ -340,31 +340,16 @@ dependencies = [
 ]
 
 [[package]]
-name = "curseofrust"
-version = "0.1.0"
-dependencies = [
- "fastrand",
-]
-
-[[package]]
-name = "curseofrust-cli-parser"
-version = "0.1.0"
-dependencies = [
- "clap_lex",
- "curseofrust",
-]
-
-[[package]]
 name = "curseofrust-console"
 version = "0.1.0"
 dependencies = [
  "async-executor",
  "async-io",
  "crossterm",
- "curseofrust",
- "curseofrust-cli-parser",
- "curseofrust-msg",
- "curseofrust-net-foundation",
+ "curseofsubit",
+ "curseofsubit-cli-parser",
+ "curseofsubit-msg",
+ "curseofsubit-net-foundation",
  "fastrand",
  "futures-lite",
  "local-ip-address",
@@ -376,9 +361,9 @@ version = "0.1.0"
 dependencies = [
  "build-time",
  "cacao",
- "curseofrust",
- "curseofrust-cli-parser",
- "curseofrust-msg",
+ "curseofsubit",
+ "curseofsubit-cli-parser",
+ "curseofsubit-msg",
  "dispatch",
  "fastrand",
  "itoa",
@@ -386,15 +371,30 @@ dependencies = [
 ]
 
 [[package]]
-name = "curseofrust-msg"
+name = "curseofsubit"
 version = "0.1.0"
 dependencies = [
- "bytemuck",
- "curseofrust",
+ "fastrand",
 ]
 
 [[package]]
-name = "curseofrust-net-foundation"
+name = "curseofsubit-cli-parser"
+version = "0.1.0"
+dependencies = [
+ "clap_lex",
+ "curseofsubit",
+]
+
+[[package]]
+name = "curseofsubit-msg"
+version = "0.1.0"
+dependencies = [
+ "bytemuck",
+ "curseofsubit",
+]
+
+[[package]]
+name = "curseofsubit-net-foundation"
 version = "0.1.0"
 dependencies = [
  "unisock",
@@ -403,15 +403,15 @@ dependencies = [
 ]
 
 [[package]]
-name = "curseofrust-server"
+name = "curseofsubit-server"
 version = "0.1.0"
 dependencies = [
  "async-executor",
  "async-io",
- "curseofrust",
- "curseofrust-cli-parser",
- "curseofrust-msg",
- "curseofrust-net-foundation",
+ "curseofsubit",
+ "curseofsubit-cli-parser",
+ "curseofsubit-msg",
+ "curseofsubit-net-foundation",
  "fastrand",
  "futures-lite",
  "local-ip-address",

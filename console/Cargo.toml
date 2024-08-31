@@ -6,10 +6,12 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-curseofrust = { path = ".." }
-curseofrust-cli-parser = { path = "../cli", features = ["net-proto"] }
-curseofrust-msg = { path = "../msg", optional = true }
-curseofrust-net-foundation = { path = "../net-foundation", optional = true }
+curseofrust = { path = "..", package = "curseofsubit" }
+curseofrust-cli-parser = { path = "../cli", features = [
+  "net-proto",
+], package = "curseofsubit-cli-parser" }
+curseofrust-msg = { path = "../msg", optional = true, package = "curseofsubit-msg" }
+curseofrust-net-foundation = { path = "../net-foundation", optional = true, package = "curseofsubit-net-foundation" }
 fastrand = "2.1.0"
 crossterm = { version = "0.27", features = ["event-stream"] }
 futures-lite = "2.3.0"

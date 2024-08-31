@@ -1,8 +1,8 @@
 [package]
-name = "curseofrust-msg"
+name = "curseofsubit-msg"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-curseofrust = { path = "../" }
+curseofrust = { path = "../", package = "curseofsubit" }
 bytemuck = "1.16.1"

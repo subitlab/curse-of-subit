@@ -1,15 +1,17 @@
 [package]
-name = "curseofrust-server"
+name = "curseofsubit-server"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-curseofrust = { path = ".." }
-curseofrust-cli-parser = { path = "../cli", features = ["net-proto"] }
-curseofrust-msg = { path = "../msg" }
-curseofrust-net-foundation = { path = "../net-foundation" }
+curseofrust = { path = "..", package = "curseofsubit" }
+curseofrust-cli-parser = { path = "../cli", features = [
+    "net-proto",
+], package = "curseofsubit-cli-parser" }
+curseofrust-msg = { path = "../msg", package = "curseofsubit-msg" }
+curseofrust-net-foundation = { path = "../net-foundation", package = "curseofsubit-net-foundation" }
 futures-lite = "2.3.0"
 async-io = "2.3"
 async-executor = "1.12"
